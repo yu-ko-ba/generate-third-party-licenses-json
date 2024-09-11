@@ -1,0 +1,24 @@
+{
+  "name": "generate-third-party-licenses-json",
+  "version": "0.0.1",
+  "bin": {
+    "generate-third-party-licenses-json": "dist/index.js"
+  },
+  "scripts": {
+    "build": "test -d dist && rm -r dist; tsc && chmod a+x ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "yu-ko-ba",
+  "license": "MIT",
+  "description": "A CLI tool for collecting and exporting third-party library licenses in JSON format",
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "volta": {
+    "node": "20.17.0",
+    "npm": "10.8.3"
+  }
+}
