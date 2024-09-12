@@ -1,39 +1,32 @@
 #!/usr/bin/env node
 
-import { execSync } from "child_process";
-import { readFileSync } from "fs";
-import { Dependency } from "model/dependency";
+import { collectDependencies } from "./collect-dependencies";
+import { readFileSync, writeFileSync } from "fs";
+import yargs from "yargs";
 
 (() => {
-  const packageJson = JSON.parse(readFileSync('./package.json').toString());
+  const packageJson = JSON.parse(readFileSync("./package.json").toString());
   if (!packageJson.dependencies) {
     return;
   }
 
-  const dependencyNames = Object.keys(packageJson.dependencies);
+  const dependencies = collectDependencies(packageJson.dependencies);
+  const thirdPartyLicensesString = JSON.stringify(dependencies);
 
-  const npmRoot = execSync('npm root').toString().trim();
-  const dependencies = dependencyNames.map((name): Dependency => {
-    const dependencyPath = `${npmRoot}/${name}`;
+  const args = yargs
+    .command("* [options]", "A CLI tool for collecting and exporting third-party library licenses in JSON format")
+    .options({
+      outFilePath: {
+        type: "string",
+        describe: "path to output file\ne.g. './public/third-party-licenses.json'",
+        demandOption: false,
+      }
+    })
+    .parseSync();
 
-    const packageJson = JSON.parse(readFileSync(`${dependencyPath}/package.json`).toString());
-    const licenseName = packageJson.license as string;
-
-    const dependency: Dependency = {
-      name: name,
-      licenseName: licenseName,
-    };
-
-    if (packageJson.description) {
-      dependency.description = packageJson.description;
-    }
-
-    try {
-      dependency.license = readFileSync(`${dependencyPath}/LICENSE`).toString();
-    } catch { }
-
-    return dependency;
-  });
-
-  console.log(JSON.stringify(dependencies));
+  if (args.outFilePath) {
+    writeFileSync(args.outFilePath, thirdPartyLicensesString);
+  } else {
+    console.log(thirdPartyLicensesString);
+  }
 })();
