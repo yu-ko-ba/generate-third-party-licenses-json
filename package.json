@@ -1,11 +1,12 @@
 {
   "name": "generate-third-party-licenses-json",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
-    "generate-third-party-licenses-json": "dist/index.js"
+    "generate-third-party-licenses-json": "./index.js"
   },
   "scripts": {
     "build": "test -d dist && rm -r dist; tsc && chmod a+x ./dist/index.js",
+    "postbuild": "copyfiles ./package.json ./dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@types/node": "^22.5.4",
     "@types/yargs": "^17.0.33",
+    "copyfiles": "^2.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
   },
