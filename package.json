@@ -1,6 +1,6 @@
 {
   "name": "generate-third-party-licenses-json",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "bin": {
     "generate-third-party-licenses-json": "./index.js"
   },
