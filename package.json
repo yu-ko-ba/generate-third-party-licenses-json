@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "test -d dist && rm -r dist; tsc && chmod a+x ./dist/index.js",
-    "postbuild": "copyfiles ./package.json ./dist/",
+    "postbuild": "copyfiles ./package.json ./LICENSE ./dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

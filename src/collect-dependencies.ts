@@ -25,7 +25,7 @@ export const collectDependencies = (projectDependencies: any): Dependency[] => {
       dependency.website = packageJson.homepage;
     }
 
-    if (packageJson.repository.url) {
+    if (packageJson.repository?.url) {
       dependency.repository = packageJson.repository.url;
     }
 
